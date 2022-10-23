@@ -21,6 +21,8 @@ env:
   # observing issues fetching boringssl via HTTPS in the OSX build, seeing if this helps
   # can be removed when we switch back to the upstream openssl-sys crate
   CARGO_NET_GIT_FETCH_WITH_CLI: true
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   generate-publish-metadata:
@@ -264,8 +266,9 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v2.1.0
         with:
-          username: ${{ secrets.CI_DOCKER_USERNAME }}
-          password: ${{ secrets.CI_DOCKER_PASSWORD }}
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2.1.0
         with:
