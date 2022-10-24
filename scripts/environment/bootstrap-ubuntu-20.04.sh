@@ -160,3 +160,6 @@ EOF
 rustc-wrapper = "$RUSTC_WRAPPER"
 EOF
 fi
+
+# H.G.: WIP, fixing build problems on private runners
+chown runner:runner -R /home/runner
